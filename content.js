@@ -13,12 +13,16 @@ window.onload = function () {
         continue;
       }
 
-      let index = name.indexOf('https://github.com');
-      if (index != 1) {
+      let match = /\[(?<text>.+?)\]\((?<url>.+?)\)/g.exec(name);
+      if (match == null) {
         continue;
       }
 
-      nameDom.innerHTML = '<a href="' + name + '" target="_blank">' + name + '</a>';
+      if (match.groups.url.length < 1 || match.groups.text.length < 1) {
+        continue;
+      }
+
+      nameDom.innerHTML = '<a href="' + match.groups.url + '" target="_blank">' + match.groups.text + '</a>';
     }
   }
 };
